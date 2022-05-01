@@ -1,4 +1,4 @@
-flask
+Flask
 flask_restful
 csv
 pandas
@@ -10,3 +10,4 @@ pillow
 numpy
 python-dotenv
 re
+gunicorn
