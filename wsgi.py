@@ -1,4 +1,5 @@
-from app import *
+#from app import *
+from main import *
 from waitress import serve
 import os
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
