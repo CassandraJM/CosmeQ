@@ -2,7 +2,7 @@ Flask
 flask_restful
 #csv
 pandas
-io
+#io
 os
 google-cloud-vision
 google-cloud-storage
