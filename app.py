@@ -35,7 +35,7 @@ def explicit():
     client = vision.ImageAnnotatorClient()
 
 
-
+####Returning the chemicals in the database that are present in the input image
 def cross_match(det_OCR_list):
 
     #####Setting up Harmful Chemicals Dataset as List#####
@@ -58,7 +58,7 @@ def cross_match(det_OCR_list):
     #Dict. chemical_detected = TRUE or FALSE, if TRUE, chemical_names = [list of chemicals]
     detected_chemicals = {'chemical_detected': "", 'chemical_names': []}
 
-
+    '''
     #Cross-matching detected chemicals with chemicals_dict
     for det in det_OCR_list:
         if (det in chemicals_dict.keys()) and (det not in detected_chemicals['chemical_names']):
@@ -70,14 +70,44 @@ def cross_match(det_OCR_list):
         detected_chemicals['chemical_detected'] = True
     else:
         detected_chemicals['chemical_detected'] = False
-    
-        
+    '''
+#_______________________________________________________________
+####cross-matching chemicals_dict with detected chemicals#####
+    for det in chemicals_dict.keys():
+        if (det in det_OCR_list) and (det not in detected_chemicals['chemical_names']):
+            detected_chemicals["chemical_names"].append(det) 
+        else:
+            pass
+    #Check if chemical_names list is populated
+    if bool(detected_chemicals["chemical_names"]):
+        detected_chemicals['chemical_detected'] = True
+    else:
+        detected_chemicals['chemical_detected'] = False
+#________________________________________________________________
+
+      
     #Output
     if ( (detected_chemicals['chemical_detected'] == True) ):
         return(detected_chemicals)
     else:
-        return str(False)
-        #return str(det_OCR_list)
+        #return str(False)
+        return str(det_OCR_list)
+
+
+#Clean text - slated for upgrade
+def textClean(text):
+    letters = list(text)
+
+    processed_letters = []
+    new_Text = ''
+    for p in letters:
+        if p.isalpha():
+            processed_letters.append(p)
+        else:
+            pass
+    
+        new_Text = "".join(processed_letters)
+    return new_Text.capitalize()
 
     
 #@app.route('/chems/<path:path>')
@@ -116,8 +146,17 @@ def detect_text_uri():
                 'https://cloud.google.com/apis/design/errors'.format(
                     response.error.message))
 
+        processed_OCR_list = []
+
+        for text in det_OCR_list:
+            if text in processed_OCR_list:
+                pass
+            else:
+                processed_OCR_list.append(textClean(text))
+
+
         #return str(logo_list)
-        return cross_match(det_OCR_list)
+        return cross_match(" ".join(processed_OCR_list))
 
 if __name__ == '__main__':
    app.run(debug=True)
