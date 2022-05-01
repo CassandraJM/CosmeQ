@@ -10,7 +10,7 @@ from google.cloud import vision
 from PIL import Image
 import numpy as np
 from dotenv import load_dotenv
-import waitress
+import re
 
 
 app = Flask(__name__)
@@ -76,11 +76,13 @@ def cross_match(det_OCR_list):
     if ( (detected_chemicals['chemical_detected'] == True) ):
         return(detected_chemicals)
     else:
-        return str(False)
+        #return str(False)
+        return str(det_OCR_list)
 
-@app.route('/chems/', methods = ['POST'])
+    
 #@app.route('/chems/<path:path>')
-def detect_text_uri(path):
+@app.route('/chems/', methods = ['POST'])
+def detect_text_uri():
 
     explicit()
 
@@ -90,7 +92,8 @@ def detect_text_uri(path):
 
         """Detects text in the file located in Google Cloud Storage or on the Web.
         """
-        from google.cloud import vision
+
+        path = request.form['path']
         client = vision.ImageAnnotatorClient()
         image = vision.Image()
         image.source.image_uri = path
@@ -105,7 +108,7 @@ def detect_text_uri(path):
             if text in det_OCR_list:
                 pass
             else:
-                det_OCR_list.append(text.description)
+                det_OCR_list.append(text.description.lower())
 
         if response.error.message:
             raise Exception(
@@ -117,4 +120,4 @@ def detect_text_uri(path):
         return cross_match(det_OCR_list)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+   app.run(debug=True)
