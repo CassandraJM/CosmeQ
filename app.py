@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from flask import Flask
-from flask_restful import Resource, Api, reqparse, request
-import pandas as pd
+from flask_restful import Api, request
+#import pandas as pd
 import csv
 import os
 import io
@@ -76,8 +76,8 @@ def cross_match(det_OCR_list):
     if ( (detected_chemicals['chemical_detected'] == True) ):
         return(detected_chemicals)
     else:
-        #return str(False)
-        return str(det_OCR_list)
+        return str(False)
+        #return str(det_OCR_list)
 
     
 #@app.route('/chems/<path:path>')
@@ -108,7 +108,7 @@ def detect_text_uri():
             if text in det_OCR_list:
                 pass
             else:
-                det_OCR_list.append(text.description.lower())
+                det_OCR_list.append(text.description)
 
         if response.error.message:
             raise Exception(
