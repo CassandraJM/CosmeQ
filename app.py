@@ -18,12 +18,22 @@ api = Api(app)
 
 
 # google vision access key
-gvision_access_json = "client_secret_698428564418-u9q0hmtd5t2ggm14rbvsrotph76ni8u8.apps.googleusercontent.com.json"
+gvision_access_json = "imperial-vector-348819-d24b04c03902.json"
 
 # AWS access key
 load_dotenv()
 access_key_id = os.getenv('access_key_id')
 secret_access_key = os.getenv('secret_access_key')
+
+
+def explicit():
+    #setting credentials
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="/Users/arshveergahir/Desktop/Code Repo/Logo Detection - Google Vision/wise-arena-298219-e43867682491.json"
+
+
+    # Instantiates a client
+    client = vision.ImageAnnotatorClient()
+
 
 
 def cross_match(det_OCR_list):
@@ -68,8 +78,12 @@ def cross_match(det_OCR_list):
     else:
         return str(False)
 
-@app.route('/chems/', methods = ['POST'])
+#@app.route('/chems/', methods = ['POST'])
+@app.route('/chems/<path:path>')
 def detect_text_uri(uri):
+
+    explicit()
+
     if request.method != 'POST':
         return("Error 405 - Method Not Allowed")
     else:
@@ -101,3 +115,6 @@ def detect_text_uri(uri):
 
         #return str(logo_list)
         return cross_match(det_OCR_list)
+
+if __name__ == '__main__':
+    app.run(debug=True)
