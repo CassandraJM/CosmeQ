@@ -78,9 +78,9 @@ def cross_match(det_OCR_list):
     else:
         return str(False)
 
-#@app.route('/chems/', methods = ['POST'])
-@app.route('/chems/<path:path>')
-def detect_text_uri(uri):
+@app.route('/chems/', methods = ['POST'])
+#@app.route('/chems/<path:path>')
+def detect_text_uri(path):
 
     explicit()
 
@@ -93,7 +93,7 @@ def detect_text_uri(uri):
         from google.cloud import vision
         client = vision.ImageAnnotatorClient()
         image = vision.Image()
-        image.source.image_uri = uri
+        image.source.image_uri = path
 
         response = client.text_detection(image=image)
         texts = response.text_annotations
