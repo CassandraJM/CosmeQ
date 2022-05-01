@@ -6,5 +6,6 @@ os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 
 if __name__ == '__main__':
-    serve(app, host='0.0.0.0', port=8000)
+    #serve(app, host='0.0.0.0', port=8000)
+    serve(main, host='0.0.0.0', port=8000)
     #app.run()
