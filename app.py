@@ -158,5 +158,5 @@ def detect_text_uri():
         #return str(logo_list)
         return cross_match(" ".join(processed_OCR_list))
 
-if __name__ == '__main__':
-    app.run(debug=True)
+#if __name__ == '__main__':
+#    app.run(debug=True)
