@@ -9,5 +9,5 @@ google-cloud-storage
 pillow
 numpy
 python-dotenv
-re
+#re
 gunicorn
