@@ -1,0 +1,12 @@
+flask
+flask_restful
+csv
+pandas
+io
+os
+google-cloud-vision
+google-cloud-storage
+pillow
+numpy
+python-dotenv
+re
