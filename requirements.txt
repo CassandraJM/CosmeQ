@@ -3,7 +3,7 @@ flask_restful
 #csv
 pandas
 #io
-os
+#os
 google-cloud-vision
 google-cloud-storage
 pillow
